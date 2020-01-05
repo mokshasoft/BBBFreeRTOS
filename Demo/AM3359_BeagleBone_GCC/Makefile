@@ -33,9 +33,9 @@
 #    FreeRTOS is distributed in the hope that it will be useful, but WITHOUT
 #    ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
 #    FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for
-#    more details. You should have received a copy of the GNU General Public 
-#    License and the FreeRTOS license exception along with FreeRTOS; if not it 
-#    can be viewed here: http://www.freertos.org/a00114.html and also obtained 
+#    more details. You should have received a copy of the GNU General Public
+#    License and the FreeRTOS license exception along with FreeRTOS; if not it
+#    can be viewed here: http://www.freertos.org/a00114.html and also obtained
 #    by writing to Richard Barry, contact details for whom are available on the
 #    FreeRTOS WEB site.
 #
@@ -67,18 +67,18 @@ OBJCOPY=/home/henrifo/Nedlastinger/gcc-arm-none-eabi-4_8-2013q4/bin/arm-none-eab
 ARCH=/home/henrifo/Nedlastinger/gcc-arm-none-eabi-4_8-2013q4/bin/arm-none-eabi-ar
 CRT0=boot.s
 WARNINGS=-Wall -Wextra -Wshadow -Wpointer-arith -Wbad-function-cast -Wcast-align -Wsign-compare \
-		-Waggregate-return -Wstrict-prototypes -Wmissing-prototypes -Wmissing-declarations -Wunused
+        -Waggregate-return -Wstrict-prototypes -Wmissing-prototypes -Wmissing-declarations -Wunused
 
 #
 # CFLAGS common to both the THUMB and ARM mode builds
 
 CFLAGS=$(WARNINGS) -D DEBUG -D $(RUN_MODE) -D GCC_AM335_BeagleBoard -I. -I../../Source/include \
-		-I../Common/include $(DEBUG) -mcpu=cortex-a8 -T$(LDSCRIPT) -Ttext $(TEXT_BASE) \
-	 $(OPTIM) -fomit-frame-pointer -fno-strict-aliasing -mno-unaligned-access
+        -I../Common/include $(DEBUG) -mcpu=cortex-a8 -T$(LDSCRIPT) -Ttext $(TEXT_BASE) \
+     $(OPTIM) -fomit-frame-pointer -fno-strict-aliasing -mno-unaligned-access
 
 ifeq ($(USE_THUMB_MODE),YES)
-	CFLAGS += -mthumb-interwork -D THUMB_INTERWORK
-	THUMB_FLAGS=-mthumb
+    CFLAGS += -mthumb-interwork -D THUMB_INTERWORK
+    THUMB_FLAGS=-mthumb
 endif
 
 LINKER_FLAGS=-Xlinker -o$(TARGET).elf -Xlinker -M -Xlinker -Map=$(TARGET).map
@@ -115,9 +115,9 @@ ARM_OBJ = $(ARM_SRC:.c=.o)
 THUMB_OBJ = $(THUMB_SRC:.c=.o)
 
 ifeq ($(USE_THUMB_MODE),YES)
-	TARGET=rtosdemo-t
+    TARGET=rtosdemo-t
 else
-	TARGET=rtosdemo-a
+    TARGET=rtosdemo-a
 endif
 
 $(TARGET).bin : $(TARGET).elf
