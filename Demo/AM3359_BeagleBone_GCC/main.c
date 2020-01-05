@@ -128,63 +128,6 @@ static void vRespTask1(void *pvParameters)
 
 }
 
-/*static void vRespTask2(void *pvParameters)
-{
-    uint32_t xLastWakeTime;
-    const uint32_t xFrequency = 1;
-    // Initialise the xLastWakeTime variable with the current time.
-    xLastWakeTime = xTaskGetTickCount();
-
-    const portTickType msDelay = 1;
-    unsigned int c,ret,i;
-    char buf[3];
-    serial_puts(UART0_BASE,"task2\n");
-    (*(REG32(GPIO0_BASE + GPIO_SETDATAOUT))) |= PIN4;
-    while(1) {
-        if (channel2_flag == TRUE) {
-            channel2_flag = FALSE;
-            i=0x1FF;
-            while(i--){;}
-            (*(REG32(GPIO0_BASE + GPIO_CLEARDATAOUT))) |= PIN4;
-            i=0xAF;
-            while(i--){;}
-            (*(REG32(GPIO0_BASE + GPIO_SETDATAOUT))) |= PIN4;
-            //serial_puts(UART0_BASE,"r2\n");
-        }
-        (*(REG32(GPIO0_BASE + GPIO_SETDATAOUT))) |= PIN4;
-        //vTaskDelayUntil(&xLastWakeTime, xFrequency);
-        vTaskDelay(1);
-    }
-}
-
-static void vRespTask3(void *pvParameters)
-{
-    uint32_t xLastWakeTime;
-    const uint32_t xFrequency = 1;
-    // Initialise the xLastWakeTime variable with the current time.
-    xLastWakeTime = xTaskGetTickCount();
-
-    const portTickType msDelay = 1;
-    unsigned int i;
-    serial_puts(UART0_BASE,"task3\r\n");
-    (*(REG32(GPIO0_BASE + GPIO_SETDATAOUT))) |= PIN3;
-    while(1) {
-        if (channel3_flag == TRUE) {
-            channel3_flag = FALSE;
-            i=0x1FF;
-            while(i--){;}
-            (*(REG32(GPIO0_BASE + GPIO_CLEARDATAOUT))) |= PIN3;
-            i=0xAF;
-            while(i--){;}
-            (*(REG32(GPIO0_BASE + GPIO_SETDATAOUT))) |= PIN3;
-            //serial_puts(UART0_BASE,"r3\r\n");
-        }
-        (*(REG32(GPIO0_BASE + GPIO_SETDATAOUT))) |= PIN3;
-        //vTaskDelayUntil(&xLastWakeTime, xFrequency);
-        vTaskDelay(1);
-    }
-}*/
-
 static void vBlink(void *pvParameters)
 {
     unsigned int i;
@@ -231,11 +174,6 @@ int main( void )
 
 
     xTaskCreate(vRespTask1,  ( signed char * ) "resp1", configMINIMAL_STACK_SIZE, NULL, tskIDLE_PRIORITY + 3, ( xTaskHandle * ) NULL);
-
-    /*xTaskCreate(vRespTask2,  ( signed char * ) "resp2", configMINIMAL_STACK_SIZE, NULL, tskIDLE_PRIORITY + 3, ( xTaskHandle * ) NULL);
-
-    xTaskCreate(vRespTask3,  ( signed char * ) "resp3", configMINIMAL_STACK_SIZE, NULL, tskIDLE_PRIORITY + 3, ( xTaskHandle * ) NULL);*/
-
     xTaskCreate(vBlink,  ( signed char * ) "BLINK1", configMINIMAL_STACK_SIZE, NULL, tskIDLE_PRIORITY + 1, ( xTaskHandle * ) NULL);
     xTaskCreate(vBlink,  ( signed char * ) "BLINK2", configMINIMAL_STACK_SIZE, NULL, tskIDLE_PRIORITY + 1, ( xTaskHandle * ) NULL);
     xTaskCreate(vBlink,  ( signed char * ) "BLINK3", configMINIMAL_STACK_SIZE, NULL, tskIDLE_PRIORITY + 1, ( xTaskHandle * ) NULL);
