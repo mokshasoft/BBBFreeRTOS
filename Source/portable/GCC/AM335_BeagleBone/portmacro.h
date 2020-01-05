@@ -78,11 +78,11 @@ extern "C" {
 #define portBASE_TYPE  portLONG
 
 #if( configUSE_16_BIT_TICKS == 1 )
-    typedef unsigned portSHORT portTickType;
-    #define portMAX_DELAY ( portTickType ) 0xffff
+typedef unsigned portSHORT portTickType;
+#define portMAX_DELAY ( portTickType ) 0xffff
 #else
-    typedef unsigned portLONG portTickType;
-    #define portMAX_DELAY ( portTickType ) 0xffffffff
+typedef unsigned portLONG portTickType;
+#define portMAX_DELAY ( portTickType ) 0xffffffff
 #endif
 /*-----------------------------------------------------------*/
 
@@ -202,13 +202,13 @@ extern void vTaskSwitchContext( void );
  */
 
 #ifdef THUMB_INTERWORK
-    extern void vPortDisableInterruptsFromThumb( void ) __attribute__ ((naked));
-    extern void vPortEnableInterruptsFromThumb( void ) __attribute__ ((naked));
+extern void vPortDisableInterruptsFromThumb( void ) __attribute__ ((naked));
+extern void vPortEnableInterruptsFromThumb( void ) __attribute__ ((naked));
 
-    #define portDISABLE_INTERRUPTS() vPortDisableInterruptsFromThumb()
-    #define portENABLE_INTERRUPTS()  vPortEnableInterruptsFromThumb()
+#define portDISABLE_INTERRUPTS() vPortDisableInterruptsFromThumb()
+#define portENABLE_INTERRUPTS()  vPortEnableInterruptsFromThumb()
 #else
-    #define portDISABLE_INTERRUPTS()                                            \
+#define portDISABLE_INTERRUPTS()                                            \
         __asm volatile (                                                        \
             "STMDB SP!, {R0}       \n\t"    /* Push R0. */                      \
             "MRS   R0, CPSR        \n\t"    /* Get CPSR. */                     \
@@ -216,7 +216,7 @@ extern void vTaskSwitchContext( void );
             "MSR   CPSR, R0        \n\t"    /* Write back modified value. */    \
             "LDMIA SP!, {R0}" )             /* Pop R0. */
 
-    #define portENABLE_INTERRUPTS()                                             \
+#define portENABLE_INTERRUPTS()                                             \
         __asm volatile (                                                        \
             "STMDB SP!, {R0}       \n\t"    /* Push R0. */                      \
             "MRS   R0, CPSR        \n\t"    /* Get CPSR. */                     \

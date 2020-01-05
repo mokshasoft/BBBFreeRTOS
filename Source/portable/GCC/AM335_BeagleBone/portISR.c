@@ -93,7 +93,7 @@ void vPortISRStartFirstTask( void )
 /*-----------------------------------------------------------*/
 
 /* Read the incoming interrupt and then jump to the appropriate ISR */
-void vIRQHandler ( void ){
+void vIRQHandler ( void ) {
     portSAVE_CONTEXT();
 
     /* If this is IRQ_38 then jump to vTickISR */
@@ -162,9 +162,9 @@ void vTickISR( void )
     task that is ready to run. */
     __asm volatile("bl vTaskIncrementTick");
 
-    #if configUSE_PREEMPTION == 1
-        __asm volatile("bl vTaskSwitchContext");
-    #endif
+#if configUSE_PREEMPTION == 1
+    __asm volatile("bl vTaskSwitchContext");
+#endif
 
     __asm volatile("pop {lr}    \n\t");
 }
@@ -177,30 +177,30 @@ void vTickISR( void )
  * the utilities are defined as macros in portmacro.h - as per other ports.
  */
 #ifdef THUMB_INTERWORK
-    void vPortDisableInterruptsFromThumb( void ) __attribute__ ((naked));
-    void vPortEnableInterruptsFromThumb( void ) __attribute__ ((naked));
+void vPortDisableInterruptsFromThumb( void ) __attribute__ ((naked));
+void vPortEnableInterruptsFromThumb( void ) __attribute__ ((naked));
 
-    void vPortDisableInterruptsFromThumb( void )
-    {
-        __asm volatile (
-            "STMDB SP!, {R0}     \n\t"    /* Push R0.                                    */
-            "MRS   R0, CPSR      \n\t"    /* Get CPSR.                                */
-            "ORR   R0, R0, #0xC0 \n\t"    /* Disable IRQ, FIQ.                        */
-            "MSR   CPSR, R0      \n\t"    /* Write back modified value.                */
-            "LDMIA SP!, {R0}     \n\t"    /* Pop R0.                                    */
-            "BX    R14" );                /* Return back to thumb.                    */
-    }
+void vPortDisableInterruptsFromThumb( void )
+{
+    __asm volatile (
+        "STMDB SP!, {R0}     \n\t"    /* Push R0.                                    */
+        "MRS   R0, CPSR      \n\t"    /* Get CPSR.                                */
+        "ORR   R0, R0, #0xC0 \n\t"    /* Disable IRQ, FIQ.                        */
+        "MSR   CPSR, R0      \n\t"    /* Write back modified value.                */
+        "LDMIA SP!, {R0}     \n\t"    /* Pop R0.                                    */
+        "BX    R14" );                /* Return back to thumb.                    */
+}
 
-    void vPortEnableInterruptsFromThumb( void )
-    {
-        __asm volatile (
-            "STMDB SP!, {R0}     \n\t"    /* Push R0.                                    */
-            "MRS   R0, CPSR      \n\t"    /* Get CPSR.                                */
-            "BIC   R0, R0, #0xC0 \n\t"    /* Enable IRQ, FIQ.                            */
-            "MSR   CPSR, R0      \n\t"    /* Write back modified value.                */
-            "LDMIA SP!, {R0}     \n\t"    /* Pop R0.                                    */
-            "BX    R14" );                /* Return back to thumb.                    */
-    }
+void vPortEnableInterruptsFromThumb( void )
+{
+    __asm volatile (
+        "STMDB SP!, {R0}     \n\t"    /* Push R0.                                    */
+        "MRS   R0, CPSR      \n\t"    /* Get CPSR.                                */
+        "BIC   R0, R0, #0xC0 \n\t"    /* Enable IRQ, FIQ.                            */
+        "MSR   CPSR, R0      \n\t"    /* Write back modified value.                */
+        "LDMIA SP!, {R0}     \n\t"    /* Pop R0.                                    */
+        "BX    R14" );                /* Return back to thumb.                    */
+}
 
 #endif /* THUMB_INTERWORK */
 

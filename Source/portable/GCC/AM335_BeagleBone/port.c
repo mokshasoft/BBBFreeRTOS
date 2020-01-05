@@ -236,16 +236,16 @@ static void prvSetupTimerInterrupt( void )
      * Interrupt Controller module reset */
     (*(REG32(MPU_INTC + INTCPS_SYSCONFIG))) = 0x00000002;
     while(((*(REG32(MPU_INTC + 0x14)))&1)!=1) {} //wait for module to be OK
-    for ( i=0; i<2000; i++){}
+    for ( i=0; i<2000; i++) {}
     /* Functional clock auto-idle mode : FuncFree */
     (*(REG32(MPU_INTC + INTCPS_IDLE))) = 0x00000001;
-    for ( i=0; i<100; i++){}
+    for ( i=0; i<100; i++) {}
     (*(REG32(MPU_INTC + 0x68))) = 0xFF;
-    for ( i=0; i<100; i++){}
+    for ( i=0; i<100; i++) {}
     (*(REG32(MPU_INTC + INTCPS_ILSR68))) = 0x0C;
     (*(REG32(MPU_INTC + INTCPS_ILSR96))) = 0x0C;
     (*(REG32(MPU_INTC + INTCPS_ILSR97))) = 0x0C;
-    for ( i=0; i<100; i++){}
+    for ( i=0; i<100; i++) {}
 
     /* Setup Interrupts */
     E_UNDEFINED = (long)U_DEF;
@@ -256,7 +256,7 @@ static void prvSetupTimerInterrupt( void )
     (*(REG32(MPU_INTC + INTCPS_MIR_CLEAR2))) = ~(*(REG32(MPU_INTC + INTCPS_MIR2)))|0x10;
     (*(REG32(MPU_INTC + INTCPS_MIR_CLEAR3))) = ~(*(REG32(MPU_INTC + INTCPS_MIR3)))|0x1;
     (*(REG32(MPU_INTC + INTCPS_MIR_CLEAR3))) = ~(*(REG32(MPU_INTC + INTCPS_MIR3)))|0x2;
-    for ( i=0; i<100; i++){}
+    for ( i=0; i<100; i++) {}
 
     /* Calculate the match value required for our wanted tick rate */
     ulCompareMatch = configDMTIMER2_CLOCK_HZ / configTICK_RATE_HZ;
@@ -264,41 +264,41 @@ static void prvSetupTimerInterrupt( void )
     //READ CM_PER offset 0, bit 14 to see if timer2 is active
     /* Set and enable DMTIMER2 */
     (*(REG32(CM_DPLL_REG + DMTIMER2_CLKSEL))) =0x1;
-     (*(REG32(CM_PER + CM_PER_TIMER2))) =0x2;
+    (*(REG32(CM_PER + CM_PER_TIMER2))) = 0x2;
     for ( i=0; i<2000; i++){i++;}
 
     //(*(REG32(GPTI1 + GPTI_TIOCP_CFG))) = 0x2; // reset interface
     (*(REG32(DMTIMER2 + 0x10))) = 0x1; // reset interface
 
-    for ( i=0; i<100; i++){}
+    for ( i=0; i<100; i++) {}
     //(*(REG32(GPTI1 + GPTI_TCRR))) = 0; // initialize counter
     (*(REG32(DMTIMER2 + 0x3C))) = 0; // initialize counter
-    for ( i=0; i<100; i++){}
+    for ( i=0; i<100; i++) {}
     //(*(REG32(GPTI1 + GPTI_TMAR))) = ulCompareMatch; // load match value
     (*(REG32(DMTIMER2 + 0x4C))) = ulCompareMatch;
-    for ( i=0; i<100; i++){}
+    for ( i=0; i<100; i++) {}
     /* Clear pending matching interrupt (if any) */
     //(*(REG32(GPTI1 + GPTI_TISR))) = 0x1;
     (*(REG32(DMTIMER2 + 0x28))) = 0x1;
-    for ( i=0; i<100; i++){}
+    for ( i=0; i<100; i++) {}
     /* Enable matching interrupts */
     //(*(REG32(GPTI1 + GPTI_TIER))) = 0x1;
     (*(REG32(DMTIMER2 + 0x2C))) = 0x1;
 
     (*(REG32(DMTIMER2 + 0x40))) = 0x0; //reload value
-    for ( i=0; i<100; i++){}
+    for ( i=0; i<100; i++) {}
     /* Timer Control Register
      * bit 0 -> start
      * bit 1 -> autoreload
      * bit 6 -> compare enabled
      */
     (*(REG32(DMTIMER2 + 0x38))) = 0x43;
-    for ( i=0; i<100; i++){}
+    for ( i=0; i<100; i++) {}
     /* Reset the timer */
     //(*(REG32(GPTI1 + GPTI_TTGR))) = 0xFF;
 
     (*(REG32(DMTIMER2 + 0x44))) = 0xFF;
-    for ( i=0; i<100; i++){}
+    for ( i=0; i<100; i++) {}
 }
 
 /*-----------------------------------------------------------*/
