@@ -186,7 +186,6 @@ static void vRespTask3(void *pvParameters)
 
 static void vBlink(void *pvParameters)
 {
-    const portTickType msDelay = 500;
     unsigned int i;
     serial_puts(UART0_BASE,"blinktask\n");
     while(1) {
