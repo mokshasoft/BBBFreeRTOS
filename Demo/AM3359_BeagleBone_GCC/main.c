@@ -77,10 +77,7 @@ short channel2_flag = FALSE;
 short channel3_flag = FALSE;
 
 static void prvSetupHardware( void );
-
 void DATA_ABORT ( void ) __attribute__((naked));
-
-/*-----------------------------------------------------------*/
 
 static void vRespTask1(void *pvParameters)
 {
@@ -142,7 +139,6 @@ static void vBlink(void *pvParameters)
     }
 }
 
-
 void DATA_ABORT()
 {
     serial_puts(UART0_BASE,"omg dataabort...\n");
@@ -154,14 +150,15 @@ void DATA_ABORT()
  */
 int main( void )
 {
-    /* Initialise the LED outputs */
+    // Initialise the LED outputs
     prvSetupHardware();
 
-    //INIT SERIAL
+    // Init serial
     init_serial(UART0_BASE);
-    //init_serial(UART4_BASE);
-    //INIT SERIAL END
+    
+    // Write to serial
     serial_puts(UART0_BASE,"Starting FreeRTOS\n");
+
     /*unsigned int test = (*(REG32(CONTROL_MODULE + 0x95c)));
     i = sprintf(buf,"%x\n",test);
     buf[i]='\0';
@@ -172,18 +169,17 @@ int main( void )
         serial_putc(UART0_BASE,c);
     }*/
 
-
+    // Create tasks
     xTaskCreate(vRespTask1,  ( signed char * ) "resp1", configMINIMAL_STACK_SIZE, NULL, tskIDLE_PRIORITY + 3, ( xTaskHandle * ) NULL);
     xTaskCreate(vBlink,  ( signed char * ) "BLINK1", configMINIMAL_STACK_SIZE, NULL, tskIDLE_PRIORITY + 1, ( xTaskHandle * ) NULL);
     xTaskCreate(vBlink,  ( signed char * ) "BLINK2", configMINIMAL_STACK_SIZE, NULL, tskIDLE_PRIORITY + 1, ( xTaskHandle * ) NULL);
     xTaskCreate(vBlink,  ( signed char * ) "BLINK3", configMINIMAL_STACK_SIZE, NULL, tskIDLE_PRIORITY + 1, ( xTaskHandle * ) NULL);
 
+    // Start scheduler
     vTaskStartScheduler();
 
     return 0;
 }
-
-/*-----------------------------------------------------------*/
 
 static void prvSetupHardware( void )
 {
