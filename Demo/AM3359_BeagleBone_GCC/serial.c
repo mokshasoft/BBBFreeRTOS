@@ -16,7 +16,8 @@ void init_serial (unsigned int base) {
     if (base == UART4_BASE) {
         clock_divisor = calc_divisor(UART4_BAUDRATE);
         (*(REG32(base+0x4))) = 0x0;
-        serial_puts(UART0_BASE,"Init4\n");}
+        serial_puts(UART0_BASE,"Init4\n");
+    }
     else {
         clock_divisor = calc_divisor(UART0_BAUDRATE);
         (*(REG32(base+0x4))) = 0x0;

@@ -92,30 +92,30 @@ static void vRespTask1(void *pvParameters)
         if (channel1_flag == TRUE) {
             channel1_flag = FALSE;
             i=0xAF;
-            while(i--){;}
+            while(i--) {;}
             (*(REG32(GPIO0_BASE + GPIO_CLEARDATAOUT))) = PIN5;
             i=0xAF;
-            while(i--){;}
+            while(i--) {;}
             (*(REG32(GPIO0_BASE + GPIO_SETDATAOUT))) = PIN5;
             //serial_puts(UART0_BASE,"r1\n");
         }
         if (channel2_flag == TRUE) {
             channel2_flag = FALSE;
             i=0xAF;
-            while(i--){;}
+            while(i--) {;}
             (*(REG32(GPIO0_BASE + GPIO_CLEARDATAOUT))) = PIN4;
             i=0xAF;
-            while(i--){;}
+            while(i--) {;}
             (*(REG32(GPIO0_BASE + GPIO_SETDATAOUT))) = PIN4;
             //serial_puts(UART0_BASE,"r2\n");
         }
         if (channel3_flag == TRUE) {
             channel3_flag = FALSE;
             i=0xAF;
-            while(i--){;}
+            while(i--) {;}
             (*(REG32(GPIO0_BASE + GPIO_CLEARDATAOUT))) = PIN3;
             i=0xAF;
-            while(i--){;}
+            while(i--) {;}
             (*(REG32(GPIO0_BASE + GPIO_SETDATAOUT))) = PIN3;
             //serial_puts(UART0_BASE,"r3\r\n");
         }
@@ -130,19 +130,19 @@ static void vBlink(void *pvParameters)
     unsigned int i;
     serial_puts(UART0_BASE,"blinktask\n");
     while(1) {
-            (*(REG32(GPIO1_BASE + GPIO_CLEARDATAOUT))) |= PIN21;
-            i=0x1FFF;
-            while(i--){;}
-            (*(REG32(GPIO1_BASE + GPIO_SETDATAOUT))) |= PIN21;
-            i=0x1FFF;
-            while(i--){;}
+        (*(REG32(GPIO1_BASE + GPIO_CLEARDATAOUT))) |= PIN21;
+        i=0x1FFF;
+        while(i--) {;}
+        (*(REG32(GPIO1_BASE + GPIO_SETDATAOUT))) |= PIN21;
+        i=0x1FFF;
+        while(i--) {;}
     }
 }
 
 void DATA_ABORT()
 {
     serial_puts(UART0_BASE,"omg dataabort...\n");
-    while(1){}
+    while(1) {}
 }
 
 /*
@@ -155,7 +155,7 @@ int main( void )
 
     // Init serial
     init_serial(UART0_BASE);
-    
+
     // Write to serial
     serial_puts(UART0_BASE,"Starting FreeRTOS\n");
 
